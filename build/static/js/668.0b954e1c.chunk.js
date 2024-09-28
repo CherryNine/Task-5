@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunktask_4=self.webpackChunktask_4||[]).push([[668],{1668:(e,s,l)=>{l.r(s),l.d(s,{default:()=>j});var n=l(2791),t=l(7689),a=l(184);const r=e=>{let{element:s}=e;return(0,a.jsx)(n.Suspense,{fallback:(0,a.jsx)("div",{}),children:(0,a.jsx)(s,{})})},c=n.lazy((()=>Promise.all([l.e(390),l.e(503)]).then(l.bind(l,1503)))),h=()=>(0,a.jsx)(t.Z5,{children:(0,a.jsx)(t.AW,{path:"/",element:(0,a.jsx)(r,{element:c})})}),j=()=>(0,a.jsx)(a.Fragment,{children:(0,a.jsx)(h,{})})}}]);
+//# sourceMappingURL=668.0b954e1c.chunk.js.map

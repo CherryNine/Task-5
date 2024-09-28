@@ -1,36 +1,40 @@
-import { Random } from 'random-js';
+import seedrandom from 'seedrandom';
 
-const random = new Random();
-
-export const applyErrors = (value: string, errorCount: number, faker: any, isPhone: boolean = false): string => {
+export const applyErrors = (value: string, errorCount: number, faker: any, isPhone: boolean = false, seed: string): string => {
+  const rng = seedrandom(seed);
   let faultyValue = value;
-  for (let j = 0; j < errorCount; j++) {
-    const errorType = random.integer(0, isPhone ? 1 : 2);
+
+  const maxErrors = Math.min(errorCount, value.length);
+  
+  for (let j = 0; j < maxErrors; j++) {
+    const errorType = Math.floor(rng() * (isPhone ? 2 : 3));
+
     if (errorType === 0) {
-      faultyValue = removeRandomCharacter(faultyValue);
+      faultyValue = removeRandomCharacter(faultyValue, rng);
     } else if (!isPhone) {
-      faultyValue = addRandomCharacter(faultyValue, faker);
+      faultyValue = addRandomCharacter(faultyValue, faker, rng);
     } else {
-      faultyValue = swapAdjacentCharacters(faultyValue);
+      faultyValue = swapAdjacentCharacters(faultyValue, rng);
     }
   }
+  
   return faultyValue;
 };
 
-const removeRandomCharacter = (str: string): string => {
-  const index = random.integer(0, str.length - 1);
+const removeRandomCharacter = (str: string, rng: seedrandom.PRNG): string => {
+  const index = Math.floor(rng() * str.length);
   return str.slice(0, index) + str.slice(index + 1);
 };
 
-const addRandomCharacter = (str: string, faker: any): string => {
+const addRandomCharacter = (str: string, faker: any, rng: seedrandom.PRNG): string => {
   const randomChar = faker.string.alpha();
-  const index = random.integer(0, str.length);
+  const index = Math.floor(rng() * (str.length + 1));
   return str.slice(0, index) + randomChar + str.slice(index);
 };
 
-const swapAdjacentCharacters = (str: string): string => {
+const swapAdjacentCharacters = (str: string, rng: seedrandom.PRNG): string => {
   if (str.length < 2) return str;
-  const index = random.integer(0, str.length - 2);
+  const index = Math.floor(rng() * (str.length - 1));
   return (
     str.slice(0, index) + str[index + 1] + str[index] + str.slice(index + 2)
   );
